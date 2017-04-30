@@ -1,0 +1,23 @@
+<div class="signup-div">
+    <h2>signup Form</h2>
+    <form ng-submit="signupCtrl.postSignup()">
+        <div class="imgcontainer">
+            <img src="img/img_avatar2.png" alt="Avatar" class="avatar">
+        </div>
+        <div class="container">
+            <label><b>firstName</b></label>
+            <input type="text" placeholder="Enter first name" name="firstName" ng-model="signupCtrl.firstName" required>
+            <label><b>lastName</b></label>
+            <input type="text" placeholder="Enter last name" name="lastName" ng-model="signupCtrl.lastName" required>
+            <label><b>Email</b></label>
+            <input type="email" placeholder="Enter email" name="email" ng-model="signupCtrl.email" required>
+            <label><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="password" ng-model="signupCtrl.password" required>
+            <button type="submit">signup</button>
+            <input type="checkbox" checked="checked"> Remember me
+        </div>
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" class="cancelbtn">Cancel</button>
+    </form>
+    
+    </div>

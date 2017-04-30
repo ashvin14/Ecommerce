@@ -1,0 +1,29 @@
+<!DOCTYPE html >
+<html ng-app='ecommApp'>
+
+<head><title>Ecommerce</title>
+
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" charset="utf-8">
+</head>
+
+<body>
+    <div class="container">
+        <div class="col-md-3"></div>
+        <div class="col-md-3" >
+          <div ng-view>
+            
+          </div>
+            
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular-route.min.js"></script>
+   <script src="angular/controller/angular-app.js"></script>
+   <script src="angular/controller/routes.js"></script>
+   <script src="angular/controller/productController.js"></script>
+    <script src="angular/services/services.js"></script>
+</body>
+
+</html>

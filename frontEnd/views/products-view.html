@@ -1,0 +1,9 @@
+<ul class="products">
+  <li ng-repeat="products in prod.products | filter:productCtrl.query | orderBy:productCtrl.orderProp" class="thumbnail">
+    <a href="#/products/{{productCtrl.id}}" class="thumb">
+      <img ng-src="{{productCtrl.imageUrl}}" alt="{{productCtrl.name}}" />
+    </a>
+    <a href="#/products/{{products.id}}">{{products.name}}</a>
+    <p>{{products.snippet}}</p>
+  </li>
+</ul>

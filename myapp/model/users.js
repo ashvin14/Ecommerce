@@ -10,5 +10,5 @@ var usersSchema = new Schema({
 	productsUploaded:{type:Number,default:0}
 
 })
-var users = mongoose.model('users',usersSchema);
+var users = mongoose.model('usersCollection',usersSchema);
 module.exports = users;

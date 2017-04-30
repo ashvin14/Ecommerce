@@ -1,6 +1,6 @@
 exports.check = function(req,res,next){
 	
-	if(req.session.passport){
+	if(req.session.passport || req.session.user){
 		console.log(req.session.passport)
 		
 		
@@ -9,15 +9,14 @@ exports.check = function(req,res,next){
 		
 	
 	else
-		res.redirect('/');
+		res.status(200).json({"notLoggedIn":false});
 }
 exports.checkInStarting = function(req,res,next){
-
+	console.log(req.session)
 	if(req.session){
-		console.log(req)
+			
 		
-		
-		redirect('/Ecommerce/products')
+		res.redirect('./products')
 	}
 		
 	

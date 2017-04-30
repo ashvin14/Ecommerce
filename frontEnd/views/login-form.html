@@ -1,0 +1,33 @@
+<div class="login-div">
+                <h2>Login Form</h2>
+                <form ng-submit="loginCtrl.postLogin()"  >
+                    <div class="imgcontainer">
+                        <img src="img/img_avatar2.png" alt="Avatar" class="avatar">
+                    </div>
+                    <div class="container">
+                        <label><b>Email</b></label>
+                        <input type="email" placeholder="Enter email" name="email" 
+
+                        ng-model="loginCtrl.email" required>
+                        <label><b>Password</b></label>
+                        <input type="password" placeholder="Enter Password" name="password" ng-model="loginCtrl.password"
+                        required>
+                        <button type="submit">Login</button>
+                        <input type="checkbox" checked="checked"> Remember me
+                    </div>
+                    <div class="container" style="background-color:#f1f1f1">
+                        <button type="button" ng-click="loginCtrl.cancel()" class="cancelbtn">Cancel</button>
+                       <a href=#"/signup"><button type="button" class=" cancelbtn signUp">signup</button></a> 
+                        <span class="psw">Forgot <a href="#">password?</a></span>
+                    </div>
+                   
+                </form>
+                 <div class="text-center container" >
+                      <p>or login as</p>
+                      <div class="row">
+                      <a href="./login/facebook"><button class="facebook-login col-md-6" >Facebook</button></a> 
+                      
+                      </div>
+
+                    </div>
+            </div>
