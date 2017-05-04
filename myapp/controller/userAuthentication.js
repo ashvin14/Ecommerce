@@ -85,7 +85,7 @@ module.exports.controllerFunction = function(app) {
                     if (err)
                         throw err;
 
-                    console.log(result)
+                    
                     if (result)
                         res.status(200).json({ 'status': 200 })
 
@@ -138,7 +138,7 @@ module.exports.controllerFunction = function(app) {
         userRouter.get('/loggout', function(req, res) {
             req.logout();
             delete req.session.passport;
-            res.redirect('#/');
+           
         })
 
         userRouter.get('/loggedIn/facebook', passport.authenticate('facebook',{failedRedirect:'#/'}),function(req,res){

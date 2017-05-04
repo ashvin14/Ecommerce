@@ -13,7 +13,7 @@ app.config(['$routeProvider', function($routeProvider){
         .when('/signup',{
         	templateUrl     : 'views/signup-form.html',
         	controller 		: 'signupController',
-        	controllerAs 	: 'signupController'
+        	controllerAs 	: 'signupCtrl'
         })
         .when('/products',{
 

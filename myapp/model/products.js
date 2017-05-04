@@ -28,5 +28,5 @@ var productSchema = new Schema({
 	sold:{type:Boolean,default:false}
 
 })
-var products = mongoose.model('products',productSchema);
+var products = mongoose.model('productsCollection',productSchema);
 module.exports= products;
