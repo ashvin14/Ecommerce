@@ -1,17 +1,26 @@
-.login-div,.signup-div{
-    width: 80%;
+.login-div,
+.signup-div {
+    width: 109%;
     position: relative;
     left: 10%;
 }
+
 form {
     border: 3px solid #f1f1f1;
 }
-body{
+
+body {
     font-family: sans-serif;
 }
 
-input[type=email], input[type=password],input[type=text] {
-    width: 100%;
+.product-img img {
+    height: 57px;
+}
+
+input[type=email],
+input[type=password],
+input[type=text] {
+    width: 96%;
     padding: 12px 20px;
     margin: 8px 0;
     display: inline-block;
@@ -29,7 +38,8 @@ button {
     width: 48%;
     text-align: center;
 }
-.signUp{
+
+.signUp {
     background-color: green !important;
 }
 
@@ -51,7 +61,6 @@ button:hover {
 img.avatar {
     width: 22%;
     border-radius: 50%;
-    
 }
 
 .container {
@@ -63,39 +72,66 @@ span.psw {
     padding-top: 16px;
 }
 
+
 /* Change styles for span and cancel button on extra small screens */
+
 @media screen and (max-width: 300px) {
     span.psw {
-       display: block;
-       float: none;
+        display: block;
+        float: none;
     }
     .cancelbtn {
-       width: 100%;
+        width: 100%;
     }
 }
-.facebook-login{
-    background-color:#4e4caf;
-    width:50%;
-    padding:11px 15px;
+
+.facebook-login {
+    background-color: #4e4caf;
+    width: 50%;
+    padding: 11px 15px;
 }
+
 .phones {
-  list-style: none;
+    list-style: none;
 }
 
-.phones li {
-  clear: both;
-  height: 115px;
-  padding-top: 15px;
+ul li {
+    clear: both;
+    height: 115px;
+    padding-top: 15px;
 }
 
-.thumb {
-  float: left;
-  height: 100px;
-  margin: -0.5em 1em 1.5em 0;
-  padding-bottom: 1em;
-  width: 100px;
+.product {
+    display: block;
+    padding: 24px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    
 }
 
-.product ul{
-list-style-type: none;
+
+ ul {
+    list-style-type: none !important;
 }
+.loggout{
+      float: right;
+    width: 10%;
+    background: white;
+    border: solid 1px grey;
+    border-radius: 8px;
+
+}
+.loggout:hover{
+  background-color:black;
+  color:white;
+}
+.caption-full{
+    padding:9px;
+}
+
+
+
+

@@ -31,7 +31,7 @@ passport.use(new Strategy({
 //session to create login
 //say you are telling node that session has started
 passport.serializeUser(function(user, cb) {
-        console.log(user);
+        
         cb(null, user);
     })
     //here you are telling node that session has ended
@@ -95,13 +95,13 @@ module.exports.controllerFunction = function(app) {
 
 
         var functionToCheckIfUserExitsWhenLoggedInManually = function(req, res) {
-            console.log(req.body)
+            
 
             userModel.findOne({ $and: [{ "email": req.body.email }, { "password": req.body.password }] }, function(err, result) {
-                console.log(result)
+                
                 if (err) throw err;
                 else if (result == null || result.email == undefined || result.password == undefined) {
-                    console.log(result)
+                    
                     res.status(200).json({ 'status': 404 })
                 } else {
                     req.session.user = result;
@@ -134,17 +134,24 @@ module.exports.controllerFunction = function(app) {
 
 
         })
-
         userRouter.get('/loggout', function(req, res) {
             req.logout();
+            delete req.session.user;
             delete req.session.passport;
+            delete req.user;
+          
+            
+
+            
+
+            res.json({'loggout':true});
            
         })
 
-        userRouter.get('/loggedIn/facebook', passport.authenticate('facebook',{failedRedirect:'#/'}),function(req,res){
-            console.log(req.user);
+        userRouter.get('/loggedIn/facebook', passport.authenticate('facebook',{successRedirect:'/Ecommerce/#/products',failedRedirect:'#/'}),function(req,res){
+            
             req.session.user=req.user;
-           res.send('successfully logged in')
+           res.send('successfully loggedIn');
 
         })
             //end for login by facebook route

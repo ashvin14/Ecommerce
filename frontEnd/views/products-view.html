@@ -1,3 +1,10 @@
+<button class="loggout" >
+    <a ng-click="productCtrl.loggout()">
+        <span class="glyphicon glyphicon-off">
+	
+		</span>
+    </a>
+</button>
 <div class="upload-product container">
     <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-lg">upload product</button>
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
@@ -14,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label for="image upload"><span class="glyphicon glyphicon-phone"></span> upload product image</label>
-                        <input type="file" class="form-control" ng-model="productCtrl.images.path" id="file" placeholder="upload img">
+                        <input type="file" id="file1" name="file" multiple ng-files="productCtrl.getTheFiles($files)" />
                     </div>
                     <div class="form-group">
                         <label for="product name"><span class="glyphicon glyphicon-phone"></span>product name</label>
@@ -30,29 +37,18 @@
         </div>
     </div>
 </div>
- <ul class="products">
-    <li class="thumbnail">
-        <a href class="thumb">
-            <img alt>
+<ul class="products">
+    <li class="thumb" ng-repeat="product in productCtrl.products">
+        <a href="#/product/{{product._id}}">
+            <div class="product container">
+                <div class="row">
+                    <div class="col-xs-3 col-md-3 product-img"><img src="data:image/png;base64,{{product.img64}}">
+                    </div>
+                    <div class="col-xs-4 col-md-5 product-name text-center">{{product.orignalname}}</div>
+                    <div class="col-xs-3 col-md-3 product-rating">Rating {{product.rating}}/10</div>
+                </div>
+            </div>
         </a>
-        <a href>{{}}</a>
-        <p>{{}}</p>
     </li>
-    </ul>
-    <!-- <form role="form">
-                    <div class="form-group">
-                        <label for="category"><span class="glyphicon glyphicon-user"></span> category</label>
-                        <input type="text" class="form-control" id="category" placeholder="Enter category">
-                    </div>
-                    <div class="form-group">
-                        <label for="description"><span class="glyphicon glyphicon-eye-open"></span> description</label>
-                        <input type="text" class="form-control" id="description" placeholder="Enter description">
-                    </div>
-                    <div class="form-group">
-                        <label for="description"><span class="glyphicon glyphicon-eye-open"></span> description</label>
-                        <input type="text" class="form-control" id="description" placeholder="Enter description">
-                    </div>
-                   
-                   
-                    <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> </button>
-                </form> -->
+</ul>
+<!--  -->

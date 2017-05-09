@@ -21,6 +21,12 @@ app.config(['$routeProvider', function($routeProvider){
         	controller 		: 'productController',
         	controllerAs 	: 'productCtrl'
         })
+        .when('/product/:id',{
+            templateUrl :'views/singleProduct.html',
+            controller:'singleProductController',
+            controllerAs:'singleProductCtrl'
+            
+        })
         /*
         .when('/edit/:id',{
 

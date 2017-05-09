@@ -3,6 +3,7 @@ app.controller('loginController', ['apiservice', function(apiservice) {
     this.email;
     this.password;
     var main = this;
+    
 
     this.postLogin = function() {
         var loginDetails = {
@@ -13,7 +14,7 @@ app.controller('loginController', ['apiservice', function(apiservice) {
 
         apiservice.postLoginDetails(loginDetails).then(function(response) {
             if (response.data.status == 200) {
-                
+
                 window.location = '#/products'
             }
             console.log(response.data.status)
@@ -30,6 +31,7 @@ app.controller('loginController', ['apiservice', function(apiservice) {
             main.password = "";
         }
     }
+
 }]);
 app.controller('signupController', ['apiservice', function(apiservice) {
     this.email;

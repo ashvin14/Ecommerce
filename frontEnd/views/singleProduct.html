@@ -1,0 +1,96 @@
+<div class="upload-product container">
+    
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="category"><span class="glyphicon glyphicon-cog"></span> category</label>
+                        <input type="text" class="form-control" ng-model="singleProductCtrl.category" id="category" placeholder="Enter category">
+                    </div>
+                    <div class="form-group">
+                        <label for="description"><span class="glyphicon glyphicon-edit"></span> description</label>
+                        <input type="text" class="form-control" ng-model="singleProductCtrl.description" height="10" width="10"
+                        id="description" placeholder="Enter description">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="product name"><span class="glyphicon glyphicon-phone"></span>product name</label>
+                        <input type="text" class="form-control" ng-model="singleProductCtrl.images.orignalname" id="productName" placeholder="Enter name of product">
+                    </div>
+                    <div class="form-group">
+                        <label for="cost"><span class="glyphicon glyphicon-usd"></span> cost</label>
+                        <input type="number" class="form-control" ng-model="singleProductCtrl.cost" id="cost" placeholder="Enter cost">
+                    </div>
+                    <button ng-click="singleProductCtrl.productEdit()" class="btn btn-success btn-block"><span class="glyphicon glyphicon-save"></span> </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="loggout">
+    <a ng-click="singleProductController.loggout()">
+        <span class="glyphicon glyphicon-off">
+	
+		</span>
+    </a>
+</button>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Ecommerce</p>
+            <div class="list-group">
+                <a class="list-group-item" ng-click='singleProductCtrl.deteteProduct()'>delete item</a>
+                <a class="list-group-item" ng-click  data-toggle="modal" data-target=".bs-example-modal-lg">Edit item</a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="data:image/png;base64,{{singleProductCtrl.product.imgbase64}}">
+                <div class="caption-full">
+                    <h4 class="pull-right">{{singleProductCtrl.product.cost}}$</h4>
+                    <h4>{{singleProductCtrl.product.name}}</h4>
+                    <p></p>
+                    <p>{{singleProductCtrl.product.description}}
+                    </p>
+                    <p>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span> 4.0 stars
+                    </p>
+                </div>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span> Anonymous
+                            <span class="pull-right">10 days ago</span>
+                            <p>This product was great in terms of quality. I would definitely buy another!</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form ng-submit="">
+                                <input type="text" height="20" width="10" placeholder="Add your review" />
+                                <input type="number" placeholder="give review out of 10">
+                                <input type="submit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

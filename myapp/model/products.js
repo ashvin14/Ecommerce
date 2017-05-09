@@ -5,28 +5,42 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var img = new Schema({
+    orignalname: String,
+    data: Buffer,
+    contentType: String
 
-var productSchema = new Schema({
-	category:{type:String,required:true},
-	description:{type:String},
-	rating	:{type:Number,default:0},
-	images	:{
-					path: {
-					 type: String,
-					 required: true,
-					 trim: true
-			 		},
-			 		originalname: {
-					 type: String,
-					 required: true
-		 }
-		 
-	},
-	admin:{type:mongoose.Schema.Types.ObjectId},
-	uploadedTime : {type:Date},
-	cost:{type:Number},
-	sold:{type:Boolean,default:false}
+
+
+
+
 
 })
-var products = mongoose.model('productsCollection',productSchema);
-module.exports= products;
+ var comments = new Schema({
+
+    commentUploader:{type:mongoose.Schema.Types.ObjectId},
+    comment:{type:'String'},
+    productId:{type:mongoose.Schema.Types.ObjectId}
+
+})
+
+
+
+
+
+
+var productSchema = new Schema({
+    category: { type: String },
+    description: { type: String },
+    rating: { type: Number, default: 0 },
+
+    images: [img],
+    comments:[comments],
+    admin: { type: mongoose.Schema.Types.ObjectId },
+    uploadedTime: { type: Date },
+    cost: { type: Number },
+    sold: { type: Boolean, default: false }
+
+})
+var products = mongoose.model('productsCollection', productSchema);
+module.exports = products;
