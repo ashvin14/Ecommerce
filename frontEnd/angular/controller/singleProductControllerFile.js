@@ -1,4 +1,3 @@
-
 //load product data
 //check if the user is admin ,if not dont allow him to delete or edit product
 //make comment schema ,to add comments about product
@@ -10,11 +9,11 @@
 //-totalProductsPurchased and total products sold
 
 app.controller('singleProductController', ['apiservice', '$routeParams', function(apiservice, $routeParams) {
-	this.product={}
-	this.loggout = function() {
-       
+    this.product = {}
+    this.loggout = function() {
+
         apiservice.loggout().then(function(response) {
-            
+
             window.location = "#/"
         })
     }
@@ -36,21 +35,21 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
             window.location = "#/"
         }
         console.log(response.data)
-        
+
         main.product.imgbase64 = response.data.Result.imgbase64[0];
         main.product.name = response.data.Result.product[0].images[0].orignalname;
-         
+
         main.product.cost = response.data.Result.product[0].cost;
         main.product.description = response.data.Result.product[0].description;
         main.product.id = response.data.Result.product[0]._id;
 
     })
-    this.deteteProduct = function(){
-    	console.log("hello dleelte")
-    	apiservice.deleteProduct(main.product.id).then(function(response){
-    		if(response.data.deleted==true)
-    			window.location="#/products";
-    	})
+    this.deteteProduct = function() {
+
+        apiservice.deleteProduct(main.product.id).then(function(response) {
+            if (response.data.deleted == true)
+                window.location = "#/products";
+        })
     }
 
     var isUserAdmin = function(admin) {
@@ -65,14 +64,11 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
     this.productEdit = function() {
 
         var product = {
-        	productId:main.product.id,
+            productId: main.product.id,
             category: main.category,
             description: main.description,
-            images: {
 
-                orignalname: main.images.orignalname
-            },
-           
+
             cost: main.cost
 
         }
@@ -88,15 +84,15 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
 
         // SEND THE FILES.
 
-        
-                
-                apiservice.productEdit(product).then(function(response) {
-                    console.log(response);
-                 $route.reload();
-                }, function() {
-                    alert('the api couldnt load please try again later');
-                })
-            
+
+
+        apiservice.productEdit(product).then(function(response) {
+            console.log(response);
+            window.location = "#/products"
+        }, function() {
+            alert('the api couldnt load please try again later');
+        })
+
 
 
 
@@ -104,9 +100,20 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
 
     };
 
+/*
+    this.addcomments = function() {
 
-  	
+        var comment = {
+            comment: {
+            	user:main.
 
+            }
+        }
+
+
+    }
+
+*/
 
 
 

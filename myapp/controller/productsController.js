@@ -75,6 +75,7 @@ module.exports.controllerFunction = function(app) {
 
                 Request.session = req.session;
                 Request.body = req.body;
+                console.log(Request.session)
                 //functionToStoreProductDetails.then(functionToUpdUpdateAdminsProductUploaded)
 
                 var product = new productModel({
@@ -109,11 +110,21 @@ module.exports.controllerFunction = function(app) {
     }
 
     var storeInDb = function(product) {
-        product.save(function(err, result) {
+
+
+        return new Promise(function(resolve,reject){
+             product.save(function(err, result) {
             if (err) throw err;
             else
-                console.log(result)
+                resolve(result)
         })
+
+
+
+
+
+        })
+       
     }
 
 
@@ -152,7 +163,10 @@ module.exports.controllerFunction = function(app) {
     })
     productsRouter.post('/product/upload', upload.any(), isLoggedIn.check, function(req, res) {
 
-        functionToStoreProductInDatabase(req, res).then(storeInDb)
+        functionToStoreProductInDatabase(req, res).then(storeInDb).then(function(response){
+            res.json(response)
+        })
+
 
 
     });
@@ -162,7 +176,7 @@ module.exports.controllerFunction = function(app) {
                 if (err) throw err;
                 else {
                     var Result = functionToConvertBinImgToBase64(result)
-                    res.json({ 'Result': Result, 'currentUser': req.session.user })
+                    res.json({ 'Result': Result, 'currentUser': String(req.session.user),'admin':String(Result.admin)})
                 }
             })
     })
@@ -178,8 +192,33 @@ module.exports.controllerFunction = function(app) {
         })
     })
     productsRouter.put('/product/edit/', function(req, res) {
-        console.log(req.body);
+        productModel.findOneAndUpdate({_id:req.body.productId},{$set:{
+                    category:req.body.category,
+                    description:req.body.description,
+                    cost:req.body.cost,
+                
+        
+                }},function(err,product){
+            res.json(product)
+        })
 
+
+      
+
+    })
+    productsRouter.post('/product/comment/',function(req,res){
+        productModel.findOneAndUpdate({_id:req.body.productId},{$set:{
+            comments:{
+                commentUploader:ObjectId(req.body.comment.user),
+                comment:req.body.comment.text,
+                productId:ObjectId(req.body.comment.productId)
+                
+            }
+        }},function(err,product){
+            if(err) throw err;
+            else
+                console.log(product);
+        })
     })
 
 

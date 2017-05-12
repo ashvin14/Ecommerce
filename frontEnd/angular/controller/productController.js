@@ -89,7 +89,7 @@ app.controller('productController', ['apiservice','$route' ,function(apiservice,
                 console.log(response)
                 apiservice.productUploadDetails(product).then(function(response) {
                     console.log(response);
-                 $route.reload();
+                 window.location="#/product/"+response.data._id;
                 }, function() {
                     alert('the api couldnt load please try again later');
                 })

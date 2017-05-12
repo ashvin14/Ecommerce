@@ -23,7 +23,18 @@ passport.use(new Strategy({
     clientSecret: 'd171e21d8d48f7220d952b4c565a33d6',
     callbackURL: 'http://localhost:3000/Ecommerce/loggedIn/facebook'
 }, function(accesstoken, refreshToken, profile, cb) {
+    console.log(profile)
+    var user = new userModel({
+        firstName:profile.displayName,
+        lastName:"",
+        password:"",
+        email:""
 
+        
+    })
+    user.save(function(err,result){
+        console.log(result);
+    })
     return cb(null, profile);
 }))
 
