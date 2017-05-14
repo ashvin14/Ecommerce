@@ -6,7 +6,7 @@ var usersSchema = new Schema({
 	password : {type:String,required:true},
 	email 	 : {type:String,required:true},
 	productsSold :{type:Number,default:0},
-	productsPurchased:{type:Number,default:0},
+	productsPurchased:[{type:mongoose.Schema.Types.ObjectId }],
 	productsUploaded:{type:Number,default:0}
 
 })

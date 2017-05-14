@@ -16,6 +16,9 @@ body {
 .product-img img {
     height: 57px;
 }
+#description{
+    min-height: 147px;
+}
 
 input[type=email],
 input[type=password],

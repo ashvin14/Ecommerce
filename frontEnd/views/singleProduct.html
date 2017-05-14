@@ -1,5 +1,4 @@
 <div class="upload-product container">
-    
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -10,11 +9,8 @@
                     </div>
                     <div class="form-group">
                         <label for="description"><span class="glyphicon glyphicon-edit"></span> description</label>
-                        <input type="text" class="form-control" ng-model="singleProductCtrl.description" height="10" width="10"
-                        id="description" placeholder="Enter description">
+                        <input type="text" class="form-control" ng-model="singleProductCtrl.description" height="10" width="10" id="description" placeholder="Enter description">
                     </div>
-                    
-                    
                     <div class="form-group">
                         <label for="cost"><span class="glyphicon glyphicon-usd"></span> cost</label>
                         <input type="number" class="form-control" ng-model="singleProductCtrl.cost" id="cost" placeholder="Enter cost">
@@ -26,12 +22,13 @@
     </div>
 </div>
 <button class="loggout">
-    <a ng-click="singleProductController.loggout()">
+    <a ng-click="singleProductCtrl.loggout()">
         <span class="glyphicon glyphicon-off">
-	
-		</span>
+    
+        </span>
     </a>
 </button>
+
 <br>
 <br>
 <br>
@@ -41,9 +38,9 @@
     <div class="row">
         <div class="col-md-3">
             <p class="lead">Ecommerce</p>
-            <div class="list-group">
+            <div class="list-group" ng-show="singleProductCtrl.isUserAdmin()">
                 <a class="list-group-item" ng-click='singleProductCtrl.deteteProduct()'>delete item</a>
-                <a class="list-group-item" ng-click  data-toggle="modal" data-target=".bs-example-modal-lg">Edit item</a>
+                <a class="list-group-item" data-toggle="modal" data-target=".bs-example-modal-lg">Edit item</a>
             </div>
         </div>
         <div class="col-md-9">
@@ -56,31 +53,28 @@
                     <p>{{singleProductCtrl.product.description}}
                     </p>
                     <p>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span> 4.0 stars
+                        <div class="btn btn-primary pull-right" ng-click="singleProductCtrl.addToCart()">Add to cart</div>
                     </p>
+                    <p>
+                        <span class="glyphicon glyphicon-star" ng-repeat="i in singleProductCtrl.getarray(singleProductCtrl.product.rating) track by $index"></span> {{singleProductCtrl.product.rating}} avg rating
+                    </p>
+                    Reviews
                 </div>
                 <div class="well">
-                    <div class="row">
+                    <div class="row" ng-repeat="comment in singleProductCtrl.comments">
                         <div class="col-md-12">
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span> Anonymous
-                            <span class="pull-right">10 days ago</span>
-                            <p>This product was great in terms of quality. I would definitely buy another!</p>
+                            <span><b>-{{comment.commentUploader}}</b></span>
+                            <span class="glyphicon glyphicon-star pull-right" ng-repeat="x in singleProductCtrl.getarray(comment.rating) track by $index"></span>
+                            <p>{{comment.comment}}</p>
+                            <p class="pull-right">{{comment.date}}</p>
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-12">
-                            <form ng-submit="">
-                                <input type="text" height="20" width="10" placeholder="Add your review" />
-                                <input type="number" placeholder="give review out of 10">
+                            <form ng-submit="singleProductCtrl.addcomments()">
+                                <input type="text" height="20" width="10" placeholder="Add your review" ng-model="singleProductCtrl.product.comment.body" />
+                                <input type="number" ng-model="singleProductCtrl.product.comment.rating" placeholder="give review out of 5">
                                 <input type="submit">
                             </form>
                         </div>

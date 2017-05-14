@@ -14,6 +14,7 @@ var multer = require('multer');
 var fs = require('fs')
 var upload = multer({ dest: 'uploads/' })
 var ObjectId = mongoose.Types.ObjectId;
+var userModel = require('./../model/users');
 
 
 //db is created with products as collection
@@ -75,8 +76,8 @@ module.exports.controllerFunction = function(app) {
 
                 Request.session = req.session;
                 Request.body = req.body;
-                console.log(Request.session)
-                //functionToStoreProductDetails.then(functionToUpdUpdateAdminsProductUploaded)
+               
+                    //functionToStoreProductDetails.then(functionToUpdUpdateAdminsProductUploaded)
 
                 var product = new productModel({
                     category: Request.body.category,
@@ -112,19 +113,19 @@ module.exports.controllerFunction = function(app) {
     var storeInDb = function(product) {
 
 
-        return new Promise(function(resolve,reject){
-             product.save(function(err, result) {
-            if (err) throw err;
-            else
-                resolve(result)
-        })
+        return new Promise(function(resolve, reject) {
+            product.save(function(err, result) {
+                if (err) throw err;
+                else
+                    resolve(result)
+            })
 
 
 
 
 
         })
-       
+
     }
 
 
@@ -134,6 +135,55 @@ module.exports.controllerFunction = function(app) {
     var Request = {}
 
 
+    //write a function to get name by giving id
+    var functionToGetNameById = function(id) {
+        // input :-id
+        //output:-name
+
+
+        return new Promise(function(resolve, reject) {
+            userModel.find({ _id: ObjectId(id) }, function(err, profile) {
+                if (err) throw err;
+                resolve(profile)
+
+
+            })
+
+
+
+
+
+
+
+
+        })
+
+
+    }
+
+    //function to add ratings to product
+    var findAvgRating = function(ratings) {
+            var sum = 0;
+            ratings.forEach(function(element) {
+
+                sum = sum + element;
+
+            })
+            sum = sum / ratings.length;
+            return sum;
+        }
+        //write from here
+        //from userModel
+    var functionToGetIdOfCurrentUser = function(user) {
+        return new Promise(function(resolve, reject) {
+            userModel.find({ firstName: user.firstName }, function(err, result) {
+                if (err) throw err;
+                else
+                    resolve(result)
+            })
+        })
+
+    }
 
 
 
@@ -147,7 +197,7 @@ module.exports.controllerFunction = function(app) {
                 res.status(200).json({ products: 0 })
 
             } else {
-                console.log(result)
+               
 
                 var product = functionToConvertBinImgToBase64(result);
                 res.send(product);
@@ -163,7 +213,7 @@ module.exports.controllerFunction = function(app) {
     })
     productsRouter.post('/product/upload', upload.any(), isLoggedIn.check, function(req, res) {
 
-        functionToStoreProductInDatabase(req, res).then(storeInDb).then(function(response){
+        functionToStoreProductInDatabase(req, res).then(storeInDb).then(function(response) {
             res.json(response)
         })
 
@@ -175,8 +225,15 @@ module.exports.controllerFunction = function(app) {
             productModel.find({ _id: ObjectId(req.params.id) }, function(err, result) {
                 if (err) throw err;
                 else {
+
+                    
                     var Result = functionToConvertBinImgToBase64(result)
-                    res.json({ 'Result': Result, 'currentUser': String(req.session.user),'admin':String(Result.admin)})
+                    functionToGetNameById(Result.product[0].admin).then(function(profile) {
+
+                        res.json({ 'Result': Result, 'currentUser': req.session.user, 'admin': profile });
+
+                    })
+
                 }
             })
     })
@@ -192,32 +249,104 @@ module.exports.controllerFunction = function(app) {
         })
     })
     productsRouter.put('/product/edit/', function(req, res) {
-        productModel.findOneAndUpdate({_id:req.body.productId},{$set:{
-                    category:req.body.category,
-                    description:req.body.description,
-                    cost:req.body.cost,
-                
-        
-                }},function(err,product){
+        productModel.findOneAndUpdate({ _id: req.body.productId }, {
+            $set: {
+                category: req.body.category,
+                description: req.body.description,
+                cost: req.body.cost,
+
+
+            }
+        }, function(err, product) {
             res.json(product)
         })
 
 
-      
+
 
     })
-    productsRouter.post('/product/comment/',function(req,res){
-        productModel.findOneAndUpdate({_id:req.body.productId},{$set:{
-            comments:{
-                commentUploader:ObjectId(req.body.comment.user),
-                comment:req.body.comment.text,
-                productId:ObjectId(req.body.comment.productId)
+    productsRouter.post('/product/comment/', function(req, res) {
+
+       
+        functionToGetIdOfCurrentUser(req.session.user).then(function(profile) {
+
+            return new Promise(function(resolve, reject) {
                 
+                var comment = {
+                    commentUploaderId: ObjectId(profile[0]._id),
+                    commentUploader: req.session.user.firstName,
+                    comment: req.body.commentText,
+                    uploadtime: new Date()
+                }
+                productModel.findOneAndUpdate({ _id: req.body.productId }, {
+                    $push: {
+                        comments: comment
+                    }
+                }, function(err, product) {
+                    if (err) throw err;
+                    else
+                        resolve(product)
+
+                })
+
+
+
+
+
+
+            })
+        }).then(
+            function(product) {
+                return new Promise(function(resolve, reject) {
+                    productModel.findOneAndUpdate({ _id: ObjectId(product._id) }, {
+                        $push: {
+                            ratings: (req.body.rating) % 5
+                        }
+                    }, function(error, product) {
+                        if (error) throw error
+                        resolve(product)
+
+                    })
+                })
+
             }
-        }},function(err,product){
-            if(err) throw err;
-            else
-                console.log(product);
+
+        ).then(function(product) {
+            return new Promise(function(resolve, reject) {
+                productModel.findOneAndUpdate({ _id: ObjectId(product._id) }, {
+                    $set: {
+                        rating: (findAvgRating(product.ratings) % 5)
+                    }
+                }, function(err, product) {
+                    if (err) throw err;
+
+                    res.json(product);
+
+
+                })
+            })
+        })
+    })
+
+
+
+
+
+
+    productsRouter.post('/product/addtocart', function(req, res) {
+        functionToGetIdOfCurrentUser(req.session.user).then(function(profile) {
+            console.log(req.body)
+            return new Promise(function(resolve, reject) {
+                userModel.findOneAndUpdate({ _id: ObjectId(profile[0]._id) }, {
+                    $push: {
+                        productsPurchased: ObjectId(req.body.id)
+
+                    }
+                }, function(error, result) {
+                    if (error) throw error;
+                    res.json(result)
+                })
+            })
         })
     })
 
@@ -225,4 +354,12 @@ module.exports.controllerFunction = function(app) {
 
 
     app.use('/Ecommerce', productsRouter);
+
+
 }
+
+
+
+
+
+

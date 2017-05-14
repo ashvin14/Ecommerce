@@ -66,7 +66,20 @@ app.service('apiservice', function($http) {
 
     	})
     }
-
+    this.postComment=function(data){
+    	return $http({
+    		method:'POST',
+    		url:'./product/comment',
+    		data:data
+    	})
+    }
+    this.addToCart = function(data){
+    	return $http({
+    		method:'POST',
+    		url:'./product/addToCart',
+    		data:data
+    	})
+    }
 
 
 

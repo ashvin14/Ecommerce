@@ -18,9 +18,10 @@ var img = new Schema({
 })
  var comments = new Schema({
 
-    commentUploader:{type:mongoose.Schema.Types.ObjectId},
+    commentUploaderId:{type: mongoose.Schema.Types.ObjectId },
+    commentUploader:{type:String},
     comment:{type:'String'},
-    productId:{type:mongoose.Schema.Types.ObjectId}
+    uploadedTime:{type:Date}
 
 })
 
@@ -32,8 +33,8 @@ var img = new Schema({
 var productSchema = new Schema({
     category: { type: String },
     description: { type: String },
-    rating: { type: Number, default: 0 },
-
+    ratings: [{ type: Number}],
+    rating:{type:Number,default:0},
     images: [img],
     comments:[comments],
     admin: { type: mongoose.Schema.Types.ObjectId },

@@ -25,8 +25,17 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
 
 
 
+    this.loggout = function() {
 
+        apiservice.loggout().then(function(response) {
+          
+            window.location = "#/"
+        })
+    }
 
+    this.getarray=function(num){
+    	return new Array(Math.round(num));
+    }
 
 
     var main = this;
@@ -35,13 +44,31 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
             window.location = "#/"
         }
         console.log(response.data)
-
+        main.ProductIfPurchased=response.data.Result.product[0];
+        main.product.ratings= response.data.Result.product[0].ratings;
         main.product.imgbase64 = response.data.Result.imgbase64[0];
         main.product.name = response.data.Result.product[0].images[0].orignalname;
-
+        main.product.rating = response.data.Result.product[0].rating;
         main.product.cost = response.data.Result.product[0].cost;
         main.product.description = response.data.Result.product[0].description;
         main.product.id = response.data.Result.product[0]._id;
+        main.currentUser = response.data.currentUser;
+        main.admin = response.data.admin[0];
+        console.log(main.ProductIfPurchased)
+        main.comments = response.data.Result.product[0].comments
+        for(var i in main.comments){
+        	main.comments[i].rating=main.product.ratings[i];
+
+        }
+       
+        
+        main.isUserAdmin = function() {
+            if (main.admin.firstName == main.currentUser.firstName)
+                return true;
+            else
+                return false;
+        }
+
 
     })
     this.deteteProduct = function() {
@@ -52,12 +79,8 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
         })
     }
 
-    var isUserAdmin = function(admin) {
-        if (main.product.currentUser == admin)
-            return true;
-        else
-            return false;
-    }
+
+
 
 
 
@@ -87,7 +110,7 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
 
 
         apiservice.productEdit(product).then(function(response) {
-            console.log(response);
+            
             window.location = "#/products"
         }, function() {
             alert('the api couldnt load please try again later');
@@ -100,23 +123,37 @@ app.controller('singleProductController', ['apiservice', '$routeParams', functio
 
     };
 
-/*
+    /*
+        
+
+        }
+
+    */
+
+
     this.addcomments = function() {
 
         var comment = {
-            comment: {
-            	user:main.
-
-            }
+            commentText: main.product.comment.body,
+            rating: main.product.comment.rating,
+            productId: main.product.id
         }
 
+        apiservice.postComment(comment).then(function(response) {
+            window.location = "#/products"
+
+        })
 
     }
-
-*/
-
-
-
+    this.addToCart = function(){
+    	console.log(main.ProductIfPurchased)
+    	var data ={
+    		id:main.ProductIfPurchased._id
+    	}
+    	apiservice.addToCart(data).then(function(response){
+    		alert('product added to cart');
+    	})
+    }
 
 
 
